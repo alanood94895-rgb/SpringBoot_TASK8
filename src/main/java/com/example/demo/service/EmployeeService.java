@@ -20,6 +20,7 @@ public class EmployeeService {
             System.out.println(employee);
         }
     }
+
     public void addEmployee(Employee newEmployee) {
 
         for (Employee employee : employees) {
@@ -29,4 +30,12 @@ public class EmployeeService {
                 return;
             }
         }
+        employees.add(newEmployee);
+
+        System.out.println("\nEmployee Added Successfully");
+        System.out.println("Employee ID: " + newEmployee.getEmployeeId());
+        System.out.println("Employee Name: " + newEmployee.getEmployeeName());
+        System.out.println("Department: " + newEmployee.getDepartment());
+        System.out.println("Status: Created");
+    }
 }
