@@ -32,8 +32,7 @@ public class Campaign {
 
     @Override
     public String toString() {
-        return campaignId + " -> " + campaignName +
-                " -> " + platform + " -> " + budget;
+        return campaignId + "  " + campaignName + "  " + platform + "  " + budget;
     }
 
 }
