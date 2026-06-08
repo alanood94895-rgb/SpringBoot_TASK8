@@ -20,5 +20,13 @@ public class EmployeeService {
             System.out.println(employee);
         }
     }
+    public void addEmployee(Employee newEmployee) {
 
+        for (Employee employee : employees) {
+            if (employee.getEmployeeId().equals(newEmployee.getEmployeeId())) {
+                System.out.println("\nEmployee ID already exists");
+                System.out.println("No employee was created");
+                return;
+            }
+        }
 }
