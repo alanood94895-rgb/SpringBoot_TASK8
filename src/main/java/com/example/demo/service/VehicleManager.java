@@ -31,9 +31,9 @@ public class VehicleManager {
                 "Status: Created";
     }
 
-    public void displayVehicles() {
-        for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
-        }
+    public List<Vehicle> getAllVehicles() {
+        return vehicles;
+
     }
+
 }

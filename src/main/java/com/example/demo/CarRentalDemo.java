@@ -9,7 +9,7 @@ public class CarRentalDemo {
         VehicleManager manager = new VehicleManager();
 
         System.out.println("Existing Vehicles");
-        manager.displayVehicles();
+        manager.getAllVehicles();
 
         Vehicle newVehicle =
                 new Vehicle("V104", "Kia Sportage", 30);
@@ -18,6 +18,6 @@ public class CarRentalDemo {
         System.out.println(manager.addVehicle(newVehicle));
 
         System.out.println("\nUpdated Vehicle List");
-        manager.displayVehicles();
+        manager.getAllVehicles();
     }
 }

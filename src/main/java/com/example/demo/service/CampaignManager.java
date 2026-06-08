@@ -41,5 +41,8 @@ public class CampaignManager {
             System.out.println(campaign);
         }
     }
+    public List<Campaign> getAllCampaigns() {
+        return campaigns;
+    }
 
 }
