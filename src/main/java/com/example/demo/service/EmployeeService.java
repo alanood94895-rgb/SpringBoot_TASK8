@@ -15,19 +15,17 @@ public class EmployeeService {
         employees.add(new Employee("E103", "John", "Sales"));
     }
 
-    public void displayEmployees() {
-        for (Employee employee : employees) {
-            System.out.println(employee);
-        }
+    public List <Employee> displayEmployees() {
+        return employees;
     }
 
-    public void addEmployee(Employee newEmployee) {
+    public String addEmployee(Employee newEmployee) {
 
         for (Employee employee : employees) {
             if (employee.getEmployeeId().equals(newEmployee.getEmployeeId())) {
                 System.out.println("\nEmployee ID already exists");
                 System.out.println("No employee was created");
-                return;
+
             }
         }
         employees.add(newEmployee);
@@ -37,5 +35,8 @@ public class EmployeeService {
         System.out.println("Employee Name: " + newEmployee.getEmployeeName());
         System.out.println("Department: " + newEmployee.getDepartment());
         System.out.println("Status: Created");
+
+        return "Add Successfully";
     }
+
 }
