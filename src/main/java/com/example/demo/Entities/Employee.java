@@ -1,6 +1,13 @@
 package com.example.demo.Entities;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Employee {
+
+    @Id
     private String employeeId;
     private String employeeName;
     private String department;
