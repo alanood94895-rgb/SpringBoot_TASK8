@@ -2,9 +2,14 @@ package com.example.demo.Entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Employee {
 
@@ -14,28 +19,11 @@ public class Employee {
     private String employeeName;
     private String department;
 
-    public Employee(String employeeId, String employeeName, String department) {
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.department = department;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
     @Override
     public String toString() {
         return employeeId + "  " + employeeName + "  " + department;
     }
+
     @OneToMany
     List <Campaign> campaigns;
 

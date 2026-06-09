@@ -1,34 +1,26 @@
 package com.example.demo.Entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Campaign {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String campaignId;
     private String campaignName;
     private String platform;
     private double budget;
 
-    public Campaign(String campaignId, String campaignName,
-                    String platform, double budget) {
-        this.campaignId = campaignId;
-        this.campaignName = campaignName;
-        this.platform = platform;
-        this.budget = budget;
-    }
-
-    public String getCampaignId() {
-        return campaignId;
-    }
-
-    public String getCampaignName() {
-        return campaignName;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public double getBudget() {
-        return budget;
-    }
 
     @Override
     public String toString() {
