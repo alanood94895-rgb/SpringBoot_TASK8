@@ -1,13 +1,15 @@
 package com.example.demo.Entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Employee {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private String employeeId;
     private String employeeName;
     private String department;
@@ -34,4 +36,10 @@ public class Employee {
     public String toString() {
         return employeeId + "  " + employeeName + "  " + department;
     }
+    @OneToMany
+    List <Campaign> campaigns;
+
+    @OneToMany
+    List <Vehicle> vehicles;
+
 }
