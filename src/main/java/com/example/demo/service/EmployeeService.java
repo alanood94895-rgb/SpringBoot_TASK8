@@ -1,44 +1,61 @@
 package com.example.demo.service;
 
 import com.example.demo.Entities.Employee;
+import com.example.demo.Interfaces.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class EmployeeService {
 
-    private List<Employee> employees = new ArrayList<>();
+    @Autowired
+    EmployeeRepository employeeRepository;
 
-    public EmployeeService() {
-        employees.add(new Employee("E101", "Sara", "HR",new ArrayList<>(),new ArrayList<>()));
-        employees.add(new Employee("E102", "Ahmed", "Finance",new ArrayList<>(),new ArrayList<>()));
-        employees.add(new Employee("E103", "John", "Sales",new ArrayList<>(),new ArrayList<>()));
+    public Employee getById(Integer id) {
+        return employeeRepository.getById(id);
     }
 
-    public List <Employee> displayEmployees() {
-        return employees;
+    public Employee getByName(String name) {
+        return employeeRepository.getByName(name);
     }
 
-    public String addEmployee(Employee newEmployee) {
+    public Employee save(Employee employee){
+        employee.setCreationDate(new Date());
+        employee.setIsActive(true);
+        return employeeRepository.save(employee);
+    }
 
-        for (Employee employee : employees) {
-            if (employee.getEmployeeId().equals(newEmployee.getEmployeeId())) {
-                System.out.println("\nEmployee ID already exists");
-                System.out.println("No employee was created");
+    public List<Employee> getAll(){
+        return employeeRepository.getAll();
+    }
 
-            }
+    public Employee update(Integer id, Employee newEmployee) throws Exception {
+        Employee emp = employeeRepository.getById(id);
+        if(emp != null){
+            emp.setEmployeeName(newEmployee.getEmployeeName());
+            emp.setDepartment(newEmployee.getDepartment());
+            emp.setUpdateDate(new Date());
+            return employeeRepository.save(emp);
         }
-        employees.add(newEmployee);
+        throw new Exception("Employee Cannot be Null!");
 
-        System.out.println("\nEmployee Added Successfully");
-        System.out.println("Employee ID: " + newEmployee.getEmployeeId());
-        System.out.println("Employee Name: " + newEmployee.getEmployeeName());
-        System.out.println("Department: " + newEmployee.getDepartment());
-        System.out.println("Status: Created");
-
-        return "Add Successfully";
     }
+
+    public Boolean delete(Integer id) {
+        Employee employee = employeeRepository.getById(id);
+        if(employee != null){
+            employee.setIsActive(false);
+            employee.setUpdateDate(new Date());
+            employeeRepository.save(employee);
+            return true;
+        }
+        return false;
+    }
+
+
 
 }

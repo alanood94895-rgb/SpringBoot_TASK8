@@ -1,9 +1,6 @@
 package com.example.demo.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,19 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Campaign {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String campaignId;
+public class Campaign extends ParentEntity {
     private String campaignName;
     private String platform;
-    private double budget;
-
-
-    @Override
-    public String toString() {
-        return campaignId + "  " + campaignName + "  " + platform + "  " + budget;
-    }
-
+    private Double budget;
+    @OneToOne
+    Employee employee;
 }

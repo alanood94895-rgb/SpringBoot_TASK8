@@ -1,50 +1,57 @@
 package com.example.demo.service;
 
 import com.example.demo.Entities.Campaign;
+import com.example.demo.Interfaces.CampaignRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class CampaignManager {
-    private List<Campaign> campaigns = new ArrayList<>();
+    @Autowired
+    CampaignRepository campaignRepository;
 
-    public CampaignManager() {
-        campaigns.add(new Campaign("C101", "Summer Sale", "Instagram", 500));
-        campaigns.add(new Campaign("C102", "Black Friday", "Google Ads", 1000));
-        campaigns.add(new Campaign("C103", "Email Promo", "Email", 300));
+    public Campaign save(Campaign campaign){
+        campaign.setCreationDate(new Date());
+        campaign.setIsActive(true);
+        return campaignRepository.save(campaign);
     }
 
-    public String addCampaign(Campaign campaign) {
+    public List<Campaign> getAll(){
+        return campaignRepository.getAll();
+    }
 
-        for (Campaign existingCampaign : campaigns) {
+    public Campaign getById(Integer id){
+        return campaignRepository.getById(id);
+    }
 
-            if (existingCampaign.getCampaignId()
-                    .equals(campaign.getCampaignId())) {
+    public Campaign getByName(String name){
+        return campaignRepository.getByName(name);
+    }
 
-                return "Campaign ID already exists\n" + "No campaign was created";
-            }
+    public Campaign update(Integer id , Campaign newCampaign) throws Exception{
+        Campaign campaign = getById(id);
+        if(campaign == null){
+            throw new Exception("Campaign not found");
         }
-
-        campaigns.add(campaign);
-
-        return "Campaign Created Successfully\n" +
-                "Campaign ID: " + campaign.getCampaignId() + "\n" +
-                "Campaign Name: " + campaign.getCampaignName() + "\n" +
-                "Platform: " + campaign.getPlatform() + "\n" +
-                "Budget: " + campaign.getBudget() + "\n" +
-                "Status: Active";
+        campaign.setCampaignName(newCampaign.getCampaignName());
+        campaign.setBudget(newCampaign.getBudget());
+        campaign.setPlatform(newCampaign.getPlatform());
+        campaign.setUpdateDate(new Date());
+        return campaignRepository.save(campaign);
     }
 
-    public void displayCampaigns() {
-
-        for (Campaign campaign : campaigns) {
-            System.out.println(campaign);
+    public Boolean delete(Integer id){
+        Campaign campaign = getById(id);
+        if (campaign != null){
+            campaign.setIsActive(false);
+            campaignRepository.save(campaign);
+            return true;
         }
-    }
-    public List<Campaign> getAllCampaigns() {
-        return campaigns;
+        return false;
     }
 
 }

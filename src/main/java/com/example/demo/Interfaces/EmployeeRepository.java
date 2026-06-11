@@ -3,6 +3,21 @@ package com.example.demo.Interfaces;
 import com.example.demo.Entities.Campaign;
 import com.example.demo.Entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public interface EmployeeRepository extends JpaRepository<Employee,String> {
+import java.util.List;
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
+
+    @Query("SELECT e FROM Employee e WHERE e.isActive = true")
+    List<Employee> getAll();
+
+    @Query("SELECT e FROM Employee e WHERE e.id=:id AND e.isActive = true")
+    Employee getById(@Param(value = "id") Integer id);
+
+    @Query("SELECT e FROM Employee e WHERE e.employeeName=:employeeName AND e.isActive = true")
+    Employee getByName(@Param(value = "employeeName") String employeeName);
 }

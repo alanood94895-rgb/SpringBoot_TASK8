@@ -3,26 +3,45 @@ package com.example.demo.Controller;
 import com.example.demo.Entities.Vehicle;
 import com.example.demo.service.VehicleManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("vehicle")
 public class VehicleController {
-
     @Autowired
-    private VehicleManager vehicleManager;
+    VehicleManager vehicleManager;
 
-    @GetMapping("/vehicles")
-    public List<Vehicle> getVehicles() {
-        return vehicleManager.getAllVehicles();
+    @PostMapping("add")
+    public Vehicle save(@RequestBody Vehicle vehicle ){
+        return vehicleManager.save(vehicle);
     }
 
-    @PostMapping("/vehicles")
-    public String createVehicle(@RequestBody Vehicle vehicle) {
-        return vehicleManager.addVehicle(vehicle);
+    @GetMapping("getAll")
+    public List<Vehicle> getAll(){
+        return vehicleManager.getAll();
     }
+
+    @GetMapping("getById/{id}")
+    public Vehicle getById(@PathVariable Integer id){
+        return vehicleManager.getById(id);
+    }
+
+    @GetMapping("getById/{vehicleModel}")
+    public List<Vehicle> getByModel(@PathVariable String vehicleModel){
+        return vehicleManager.getByModel(vehicleModel);
+    }
+
+    @PutMapping("update/{id}")
+    public Vehicle update(@PathVariable Integer id , @RequestBody Vehicle vehicle) throws Exception{
+        return vehicleManager.update(id,vehicle);
+    }
+
+    @DeleteMapping("delete/{id}")
+
+    public Boolean delete(@PathVariable Integer id){
+        return vehicleManager.delete(id);
+    }
+
 }

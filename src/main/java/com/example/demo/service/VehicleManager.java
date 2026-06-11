@@ -1,41 +1,58 @@
 package com.example.demo.service;
 
 import com.example.demo.Entities.Vehicle;
+import com.example.demo.Interfaces.VehicleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class VehicleManager {
-    private List<Vehicle> vehicles = new ArrayList<>();
+    @Autowired
+    VehicleRepository vehicleRepository;
 
-    public VehicleManager() {
-        vehicles.add(new Vehicle("V101", "Toyota Corolla", 20));
-        vehicles.add(new Vehicle("V102", "Nissan Sunny", 18));
-        vehicles.add(new Vehicle("V103", "Hyundai Elantra", 22));
+    public Vehicle save(Vehicle vehicle){
+        vehicle.setIsActive(true);
+        vehicle.setCreationDate(new Date());
+        return vehicleRepository.save(vehicle);
     }
 
-    public String addVehicle(Vehicle vehicle) {
+    public Vehicle getById(Integer id){
+        return vehicleRepository.findById(id).orElseThrow(()-> new RuntimeException("Vehicle Not Found!"));
+    }
 
-        for (Vehicle existingVehicle : vehicles) {
-            if (existingVehicle.getVehicleId().equals(vehicle.getVehicleId())) {
-                return "Vehicle ID already exists\nNo vehicle was added";
-            }
+    public List<Vehicle> getAll(){
+        return vehicleRepository.getAll();
+    }
+    public List<Vehicle> getByModel(String vehicleModel){
+        return vehicleRepository.getByModel(vehicleModel);
+    }
+
+    public Vehicle update(Integer id, Vehicle newVehicle) throws Exception{
+
+        Vehicle vehicle = getById(id);
+        if(vehicle == null){
+            throw new Exception("vehicle not found");
         }
-
-        vehicles.add(vehicle);
-
-        return "Vehicle Added Successfully\n" +
-                "Vehicle ID: " + vehicle.getVehicleId() + "\n" +
-                "Vehicle Model: " + vehicle.getVehicleModel() + "\n" +
-                "Rental Price Per Day: " + vehicle.getRentalPricePerDay() + " OMR\n" +
-                "Status: Created";
-    }
-
-    public List<Vehicle> getAllVehicles() {
-        return vehicles;
+        vehicle.setVehicleModel(newVehicle.getVehicleModel());
+        vehicle.setRentalPricePerDay(newVehicle.getRentalPricePerDay());
+        vehicle.setUpdateDate(new Date());
+        return vehicleRepository.save(vehicle) ;
 
     }
+
+    public Boolean delete(Integer id){
+        Vehicle vehicle = getById(id);
+        if (vehicle != null){
+            vehicle.setIsActive(false);
+            vehicleRepository.save(vehicle);
+            return true;
+        }
+        return false;
+    }
+
 
 }

@@ -7,27 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-@Data
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Entity
-public class Employee {
-
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private String employeeId;
+public class Employee extends ParentEntity {
     private String employeeName;
     private String department;
-
-    @Override
-    public String toString() {
-        return employeeId + "  " + employeeName + "  " + department;
-    }
-
     @OneToMany
-    List <Campaign> campaigns;
-
-    @OneToMany
-    List <Vehicle> vehicles;
-
+    private List<Vehicle> vehicles;
 }
